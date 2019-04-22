@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Exchange Rates: EUR to USD</string>
+    <string name="str_max">Max:</string>
+    <string name="str_min">Min:</string>
+    <string name="str_avg">Avg:</string>
+    <string name="euro">€</string>
+
+
+    <!--TODO Delete if no needed-->
+
+    <string name="tab_first">5D</string>
+    <string name="tab_second">1M</string>
+    <string name="tab_third">3M</string>
+    <string name="tab_fourth">6M</string>
+    <string name="tab_fifth">1Y</string>
+
+    <string-array name="selectable_periods">
+        <item>5D</item>
+        <item>1M</item>
+        <item>3M</item>
+        <item>6M</item>
+        <item>1Y</item>
+    </string-array>
 </resources>

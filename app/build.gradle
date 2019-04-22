@@ -25,6 +25,10 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     def mobileUiDependencies = rootProject.ext.mobileUiDependencies
@@ -41,6 +45,7 @@ dependencies {
     implementation mobileUiDependencies.rxAndroid
     implementation mobileUiDependencies.koin
     implementation mobileUiDependencies.koinArch
+    implementation mobileUiDependencies.philJayLib
     implementation "org.koin:koin-android-scope:1.0.0-RC-1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1" // use kapt for Kotlin
     // alternately - if using Java8, use the following instead of compiler
@@ -86,7 +91,7 @@ dependencies {
         exclude module: 'recyclerview-v7'
         exclude module: 'design'
     }
-
+    implementation 'com.google.android.material:material:1.0.0'
 
 //    androidTestImplementation 'androidx.test:runner:1.2.0-alpha04'
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha04'

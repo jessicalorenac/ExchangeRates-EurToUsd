@@ -2,10 +2,35 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/darkBackground</item>
+        <item name="colorAccent">@color/dollarBackground</item>
+    </style>
+
+    <style name="RatesText">
+        <item name="android:textColor">@color/regularText</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="RatesText.Small" parent="RatesText">
+        <item name="android:textSize">@dimen/rate_small_text_size</item>
+    </style>
+
+    <style name="RatesText.Tittles" parent="RatesText.Small">
+        <item name="android:textColor">@color/euroSymbol</item>
+        <item name="android:layout_marginTop">@dimen/tittle_margin_top</item>
+    </style>
+
+    <style name="RatesText.SmallItalic" parent="RatesText.Small">
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:fontStyle">italic</item>
+
+    </style>
+
+    <style name="RatesText.Enormous" parent="RatesText">
+        <item name="android:textSize">@dimen/rate_enormous_text_size</item>
+        <item name="android:textStyle">bold|italic</item>
     </style>
 
 </resources>

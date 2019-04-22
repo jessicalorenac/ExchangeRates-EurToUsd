@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!--Color Palette-->
+    <color name="colorPrimary">#000000</color>
+    <color name="selectedText">#eaf5ff</color>
+    <color name="regularText">#f9f8eb</color>
+    <color name="darkBackground">#142d4c</color>
+    <color name="dollarBackground">#9fd3c7</color>
+    <color name="dollarOutline">#5E9C76</color>
+    <color name="euroBackground">#226089</color>
+    <color name="euroOutline">#4E7AB5</color>
+    <color name="euroSymbol">#E3C4A8</color>
 </resources>
