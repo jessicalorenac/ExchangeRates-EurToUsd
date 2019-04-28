@@ -7,6 +7,6 @@ import com.jess.challenge.exchangerates.domain.repository.ExchangeRatesRepositor
 class GetFullEuroExchangeRates(private val exchangeRepository: ExchangeRatesRepository) :
     UseCase<FullEuroExchangeRate, DateRange>() {
 
-    override suspend fun run(params: DateRange) = exchangeRepository.fullRatesRange(params.startDate, params.endDate)
+    override suspend fun run(params: DateRange) = exchangeRepository.fullRatesRange(params)
 
 }

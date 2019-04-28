@@ -7,7 +7,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
-abstract class UseCase<out Type, in Params> where Type: Any {
+abstract class UseCase<out Type, in Params> where Type : Any {
 
     private var job: Job? = null
 

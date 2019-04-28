@@ -6,9 +6,18 @@ targetCompatibility = "7"
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     def domainDependencies = rootProject.ext.domainDependencies
+    def domainTestDependencies = rootProject.ext.domainTestDependencies
 
     implementation domainDependencies.kotlin
     implementation domainDependencies.rxKotlin
     implementation domainDependencies.coroutines
+
+    testImplementation domainTestDependencies.mockito
+    testImplementation domainTestDependencies.junit
+    testImplementation domainTestDependencies.kotlinJUnit
+    testImplementation domainTestDependencies.assertj
+    testImplementation domainTestDependencies.robolectric
+    testImplementation "org.amshove.kluent:kluent:1.14"
+//    testImplementation domainTestDependencies.kluent
 }
 

@@ -4,7 +4,7 @@ sourceCompatibility = "7"
 targetCompatibility = "7"
 
 dependencies {
-    implementation project(path: ':data')
+
 
     def remoteDependencies = rootProject.ext.remoteDependencies
     def remoteTestDependencies = rootProject.ext.remoteTestDependencies

@@ -1,14 +1,53 @@
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 26
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // The following argument makes the Android Test Orchestrator run its
+        // "pm clear" command after each test invocation. This command ensures
+        // that the app's state is completely cleared between tests.
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     def dataDependencies = rootProject.ext.dataDependencies
     def dataTestDependencies = rootProject.ext.dataTestDependencies
 
     implementation dataDependencies.kotlin
-    implementation dataDependencies.rxKotlin
+    implementation dataDependencies.roomXRuntime
+    kapt dataDependencies.roomXCompiler
 
-    testImplementation dataTestDependencies.junit
-    testImplementation dataTestDependencies.kotlinJUnit
-    testImplementation dataTestDependencies.mockito
-    testImplementation dataTestDependencies.assertj
+    androidTestImplementation dataTestDependencies.xRunner
+    androidTestImplementation dataTestDependencies.roomXTesting
+    androidTestAnnotationProcessor dataTestDependencies.roomXCompiler
+    androidTestImplementation dataTestDependencies.jUnitX
+    androidTestImplementation "org.amshove.kluent:kluent-android:1.28"
+//    androidTestImplementation 'androidx.test:runner:1.2.0-alpha04'
+//    androidTestImplementation 'androidx.test:rules:1.1.1'
+
+
 }

@@ -55,14 +55,16 @@
             app:layout_constraintTop_toBottomOf="@id/tabLayout"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/currentValue"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="@dimen/match_constraint"/>
 
     <TextView
             android:id="@+id/currentValue"
             app:layout_constraintTop_toBottomOf="@id/lineChart"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/selectedRate"
             android:layout_marginTop="@dimen/current_rate_margin_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,6 +102,7 @@
             app:layout_constraintTop_toBottomOf="@id/selectedRate"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/titleAvg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/RatesText.Small"
@@ -111,6 +114,7 @@
             app:layout_constraintTop_toBottomOf="@id/dateSelected"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/titleMin"
+            app:layout_constraintBottom_toTopOf="@id/valueMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/RatesText.Tittles"
@@ -121,6 +125,7 @@
             app:layout_constraintTop_toBottomOf="@id/dateSelected"
             app:layout_constraintLeft_toRightOf="@id/titleMax"
             app:layout_constraintRight_toLeftOf="@id/titleAvg"
+            app:layout_constraintBottom_toTopOf="@id/valueMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/RatesText.Tittles"
@@ -132,6 +137,7 @@
             app:layout_constraintLeft_toRightOf="@id/titleMin"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/valueMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/RatesText.Tittles"
@@ -142,6 +148,8 @@
             app:layout_constraintTop_toBottomOf="@id/titleMax"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/titleMin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/tittle_margin_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/RatesText.Small"
@@ -149,10 +157,11 @@
             tools:text="1,49"/>
 
     <TextView
-            android:id="@+id/valueeMin"
+            android:id="@+id/valueMin"
             app:layout_constraintTop_toBottomOf="@id/titleMax"
             app:layout_constraintLeft_toRightOf="@id/titleMax"
             app:layout_constraintRight_toLeftOf="@id/titleAvg"
+            app:layout_constraintBottom_toBottomOf="@id/valueMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/RatesText.Small"
@@ -165,13 +174,11 @@
             app:layout_constraintLeft_toRightOf="@id/titleMin"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/valueMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/RatesText.Small"
             android:text="1,29"
             tools:text="1,24"/>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

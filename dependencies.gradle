@@ -19,7 +19,7 @@ ext {
     okHttpVersion = '3.12.0'
     androidAnnotationsVersion = '21.0.3'
     retrofitVersion = '2.5.0'
-    roomVersion = '1.1.1'
+    roomVersion = '2.0.0'
     libraryVersion = '1.1.0-alpha04'
     libraryCore = '1.1.0-alpha05'
     koinVersion = '1.0.0-RC-1'
@@ -41,6 +41,9 @@ ext {
     dexmakerMockitoversion = '2.2.0'
     runnerVersion = '0.5'
     runnerAndroidx = '1.2.0-alpha04'
+    kluentVersion = '1.14 '
+    kluentAndroidVersion = '1.28 '
+    androidXVersion = '1.1.0'
 
 
     domainDependencies = [
@@ -49,6 +52,15 @@ ext {
             rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"
 
+    ]
+
+    domainTestDependencies = [
+            junit:              "junit:junit:${jUnitVersion}",
+            kotlinJUnit:        "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}",
+            assertj:            "org.assertj:assertj-core:${assertJVersion}",
+            mockito:            "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}",
+            robolectric:        "org.robolectric:robolectric:${robolectricVersion}",
+            kluent:             "org.amshove.kluent:kluent:${kluentVersion}"
     ]
 
     dataDependencies = [
@@ -61,43 +73,35 @@ ext {
             androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
             retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             retrofitConverter:  "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
-            retrofitAdapter:    "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+            retrofitAdapter:    "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+            roomRuntime:        "android.arch.persistence.room:runtime:${roomVersion}",
+            roomCompiler:       "android.arch.persistence.room:compiler:${roomVersion}",
+            roomXRuntime:       "androidx.room:room-runtime:${roomVersion}",
+            roomXCompiler:      "androidx.room:room-compiler:${roomVersion}",
+            roomXCoroutines:    "androidx.room:room-ktx:${roomVersion}",
+            roomRxJava:         "android.arch.persistence.room:rxjava2:${roomVersion}"
     ]
 
     dataTestDependencies = [
             junit:              "junit:junit:${jUnitVersion}",
-            kotlinJUnit:        "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}",
-            assertj:            "org.assertj:assertj-core:${assertJVersion}",
-            mockito:            "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}",
-            robolectric:        "org.robolectric:robolectric:${robolectricVersion}"
-    ]
-
-    cacheDependencies = [
-            gson:               "com.google.code.gson:gson:${gsonVersion}",
-            rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
-            kotlin:             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
-            androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
-            roomRuntime:        "android.arch.persistence.room:runtime:${roomVersion}",
-            roomCompiler:       "android.arch.persistence.room:compiler:${roomVersion}",
-            roomRxJava:         "android.arch.persistence.room:rxjava2:${roomVersion}"
-    ]
-
-    cacheTestDependencies = [
-            junit:              "junit:junit:${jUnitVersion}",
-            kotlinJUnit:        "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}",
+            jUnitX:             "androidx.test.ext:junit:${androidXVersion}",
             assertj:            "org.assertj:assertj-core:${assertJVersion}",
             mockito:            "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}",
             robolectric:        "org.robolectric:robolectric:${robolectricVersion}",
             roomTesting:        "android.arch.persistence.room:testing:${roomVersion}",
+            roomXTesting:       "androidx.room:room-testing:${roomVersion}",
+            roomXCompiler:      "androidx.room:room-compiler:${roomVersion}",
             archTesting:        "android.arch.core:core-testing:${roomVersion}",
+            xRunner:            "androidx.test:runner:${androidXVersion}",
             supportRunner:      "com.android.support.test:runner:${androidSupportRunnerVersion}",
-            supportRules:       "com.android.support.test:rules:${androidSupportRulesVersion}"
+            supportRules:       "com.android.support.test:rules:${androidSupportRulesVersion}",
+            kluentAndroid:      "org.amshove.kluent:kluent-android:${kluentAndroidVersion}"
     ]
 
     remoteDependencies = [
             gson:               "com.google.code.gson:gson:${gsonVersion}",
             rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
-            kotlin:             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
+            kotlin:             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}",
             androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
             okHttp:             "com.squareup.okhttp3:okhttp:${okHttpVersion}",
             okHttpLogger:       "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
@@ -121,7 +125,7 @@ ext {
             rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
             rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             androidAnnotations: "com.android.support:support-annotations:${supportLibraryVersion}",
-            kotlin:             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
+            kotlin:             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}",
             appcompat:          "androidx.appcompat:appcompat:${libraryVersion}",
             core:               "androidx.core:core-ktx:${libraryCore}",
             constraintLayout:   "androidx.constraintlayout:constraintlayout:${constrainLayout}",
