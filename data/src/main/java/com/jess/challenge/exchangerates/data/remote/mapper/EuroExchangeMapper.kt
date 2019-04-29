@@ -1,6 +1,6 @@
 package com.jess.challenge.exchangerates.remote.mapper
 
-import com.jess.challenge.exchangerates.data.browse.EuroExchangeEntity
+import com.jess.challenge.exchangerates.data.entity.EuroExchangeEntity
 import com.jess.challenge.exchangerates.remote.model.ExchangeRateModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

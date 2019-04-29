@@ -11,8 +11,8 @@ import java.time.LocalDate
 interface ExchangeRateDao {
 
 
-    @Query("SELECT * FROM exchangeRate")
-    fun getAllRates(): List<ExchangeRateDbEntity>
+    @Query("SELECT * FROM exchangeRate WHERE date LIKE :date ")
+    fun getRateFromDate(date: LocalDate): ExchangeRateDbEntity
 
     @Query("SELECT * FROM exchangeRate ORDER BY date DESC LIMIT 1")
     fun getMostRecentRate(): ExchangeRateDbEntity

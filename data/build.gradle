@@ -39,6 +39,13 @@ dependencies {
 
     implementation dataDependencies.kotlin
     implementation dataDependencies.roomXRuntime
+    implementation dataDependencies.gson
+    implementation dataDependencies.retrofitAdapter
+    implementation dataDependencies.retrofitConverter
+    implementation dataDependencies.androidAnnotations
+    implementation dataDependencies.retrofit
+    implementation dataDependencies.okHttpLogger
+    implementation dataDependencies.okHttp
     kapt dataDependencies.roomXCompiler
 
     androidTestImplementation dataTestDependencies.xRunner
@@ -46,8 +53,10 @@ dependencies {
     androidTestAnnotationProcessor dataTestDependencies.roomXCompiler
     androidTestImplementation dataTestDependencies.jUnitX
     androidTestImplementation "org.amshove.kluent:kluent-android:1.28"
+
+    testImplementation dataTestDependencies.jUnitX
+    testImplementation dataTestDependencies.mockito
 //    androidTestImplementation 'androidx.test:runner:1.2.0-alpha04'
 //    androidTestImplementation 'androidx.test:rules:1.1.1'
-
 
 }
