@@ -3,8 +3,7 @@ package com.jess.challenge.exchangerates.remote
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import com.jess.challenge.exchangerates.remote.model.ExchangeRateModel
-import com.jess.challenge.exchangerates.remote.model.Rate
+import com.jess.challenge.exchangerates.data.remote.model.Rate
 import java.lang.reflect.Type
 
 

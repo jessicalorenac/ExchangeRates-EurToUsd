@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -30,7 +29,10 @@ repositories {
 }
 
 dependencies {
+    implementation project(path: ':domain')
+    implementation project(path: ':data')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     def mobileUiDependencies = rootProject.ext.mobileUiDependencies
     def mobileUiTestDependencies = rootProject.ext.mobileUiTestDependencies
 
@@ -45,8 +47,9 @@ dependencies {
     implementation mobileUiDependencies.koinArch
     implementation mobileUiDependencies.philJayLib
     implementation mobileUiDependencies.archLifecycle
-    implementation "org.koin:koin-android-scope:1.0.0-RC-1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1" // use kapt for Kotlin
+    implementation mobileUiDependencies.coroutines
+
+    kapt "android.arch.lifecycle:compiler:1.1.1" // use kapt for Kotlin
     // alternately - if using Java8, use the following instead of compiler
     implementation "android.arch.lifecycle:common-java8:1.1.1"
 

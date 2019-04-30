@@ -22,7 +22,7 @@ ext {
     roomVersion = '2.0.0'
     libraryVersion = '1.1.0-alpha04'
     libraryCore = '1.1.0-alpha05'
-    koinVersion = '1.0.0-RC-1'
+    koinVersion = '2.0.0-rc-2'
     philJay = 'v3.1.0-alpha'
 
     //Testing
@@ -122,6 +122,7 @@ ext {
     mobileUiDependencies = [
             koin:               "org.koin:koin-android:${koinVersion}",
             koinArch:           "org.koin:koin-android-viewmodel:${koinVersion}",
+            koinScope:          "org.koin:koin-android-scope:${koinVersion}",
             rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
             rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             androidAnnotations: "com.android.support:support-annotations:${supportLibraryVersion}",
@@ -129,11 +130,12 @@ ext {
             appcompat:          "androidx.appcompat:appcompat:${libraryVersion}",
             core:               "androidx.core:core-ktx:${libraryCore}",
             constraintLayout:   "androidx.constraintlayout:constraintlayout:${constrainLayout}",
-            archLifecycle:        "android.arch.lifecycle:extensions:${roomVersion}",
+            archLifecycle:      "android.arch.lifecycle:extensions:${roomVersion}",
             roomRuntime:        "android.arch.persistence.room:runtime:${roomVersion}",
             roomCompiler:       "android.arch.persistence.room:compiler:${roomVersion}",
             roomRxJava:         "android.arch.persistence.room:rxjava2:${roomVersion}",
-            philJayLib:         "com.github.PhilJay:MPAndroidChart:${philJay}"
+            philJayLib:         "com.github.PhilJay:MPAndroidChart:${philJay}",
+            coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"
     ]
 
     mobileUiTestDependencies = [

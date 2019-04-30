@@ -2,8 +2,8 @@ package com.jess.challenge.exchangerates.remote
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.jess.challenge.exchangerates.remote.model.ExchangeRateModel
-import com.jess.challenge.exchangerates.remote.model.Rate
+import com.jess.challenge.exchangerates.data.remote.model.ExchangeRateModel
+import com.jess.challenge.exchangerates.data.remote.model.Rate
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

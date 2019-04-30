@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/RatesText.Small"
-            android:text="current vale: € 1,32"
+            android:text="current value: € 1,32"
             tools:text="current vale: € 1,32"/>
 
     <TextView

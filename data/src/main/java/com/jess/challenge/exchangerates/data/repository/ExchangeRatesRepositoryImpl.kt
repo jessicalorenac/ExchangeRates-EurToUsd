@@ -1,6 +1,7 @@
 package com.jess.challenge.exchangerates.data.repository
 
 import android.content.Context
+import android.util.Log
 import com.jess.challenge.exchangerates.data.cache.EuroExchangeRateDatabase
 import com.jess.challenge.exchangerates.data.cache.utils.getLocalDate
 import com.jess.challenge.exchangerates.data.mapper.*
@@ -19,11 +20,16 @@ import com.jess.challenge.exchangerates.remote.ExchangeServiceFactory
  */
 class ExchangeRatesRepositoryImpl(private val context: Context) : ExchangeRatesRepository {
 
+    companion object{
+        const val TAG = "ExchangeRatesRepositoryImpl"
+    }
+
     private val databaseDao by lazy {
         EuroExchangeRateDatabase.getInstance(context)?.getEuroExchangeRateDao()
     }
-
     private val service = ExchangeServiceFactory.getExchangeService()
+
+    //Mappers
     private val mapFromRemoteToDB = MapFromRemoteToDB()
     private val mapFromRemoteToModel = MapFromRemoteToModel()
     private val mapFromListDbToModel = MapFromListDbToListModel()
@@ -38,7 +44,7 @@ class ExchangeRatesRepositoryImpl(private val context: Context) : ExchangeRatesR
                         try {
                             databaseDao?.insertRate(mapFromRemoteToDB.mapModel(this))
                         } catch (e: Exception) {
-                            Left(Failure.DBError("Error on insert rate to db: ${e.message}"))
+                            Log.e(TAG, "Error on insert rate to db: ${e.message}")
                         }
                         Right(mapFromRemoteToModel.mapModel(this))
                     } ?: Left(Failure.ServerError("No body"))
@@ -54,9 +60,7 @@ class ExchangeRatesRepositoryImpl(private val context: Context) : ExchangeRatesR
         try {
             val startDate = getLocalDate(dateRange.startDate)
             val endDate = getLocalDate(dateRange.endDate)
-            if (databaseDao?.getRateFromDate(startDate) != null &&
-                databaseDao?.getRateFromDate(endDate) != null
-            ) {
+            if (databaseDao?.getRateFromDate(startDate) != null && databaseDao?.getRateFromDate(endDate) != null) {
                 Right(mapFromListDbToModel.mapModel(databaseDao?.getRangedRates(startDate, endDate) ?: listOf()))
             } else {
                 service.getEuroExchangeRates(dateRange.startDate, dateRange.endDate).execute().run {
@@ -65,7 +69,7 @@ class ExchangeRatesRepositoryImpl(private val context: Context) : ExchangeRatesR
                             try {
                                 databaseDao?.insertList(mapFromRemoteToListDb.mapModel(this))
                             } catch (e: Exception) {
-                                Left(Failure.DBError("Error on insert rate to db: ${e.message}"))
+                                Log.e(TAG, "Error on insert rate to db: ${e.message}")
                             }
                             Right(mapFromRemoteToListModel.mapModel(this))
                         } ?: Left(Failure.ServerError("No body"))
