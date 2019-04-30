@@ -130,4 +130,16 @@ class EuroExchangeRateDbTest {
         exchangeRateDb.rateVal shouldEqual listExchangeRate[6].rateVal
     }
 
+    @Test
+    @Throws(Exception::class)
+    fun getNotExistingRate(){
+        exchangeRateDao.insertList(listExchangeRate)
+
+        val exchangeRateDb = exchangeRateDao.getRateFromDate(getLocalDate("2019-05-05"))
+
+        exchangeRateDb shouldEqual null
+
+    }
+
+
 }

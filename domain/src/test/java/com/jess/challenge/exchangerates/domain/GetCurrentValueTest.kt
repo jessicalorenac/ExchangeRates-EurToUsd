@@ -1,7 +1,10 @@
 package com.jess.challenge.exchangerates.domain
 
 import com.jess.challenge.exchangerates.domain.exception.Failure
-import com.jess.challenge.exchangerates.domain.interactor.GetCurrentValue
+import com.jess.challenge.exchangerates.domain.exception.Failure.ServerError
+import com.jess.challenge.exchangerates.domain.exception.Failure.DBError
+import com.jess.challenge.exchangerates.domain.interactor.GetRecentRate
+import com.jess.challenge.exchangerates.domain.interactor.UseCase
 import com.jess.challenge.exchangerates.domain.model.EuroExchangeEntity
 import com.jess.challenge.exchangerates.domain.repository.ExchangeRatesRepository
 import com.nhaarman.mockito_kotlin.given
@@ -28,20 +31,19 @@ class GetCurrentValueTest : AbstractUnitTest() {
     @Mock
     private lateinit var exchangeRepository: ExchangeRatesRepository
 
-    private lateinit var getCurrentValue: GetCurrentValue
+    private lateinit var getCurrentValue: GetRecentRate
 
     @Before
     fun setup() {
-        getCurrentValue = GetCurrentValue(exchangeRepository)
-        given { exchangeRepository.currentRate(DATE) }.willReturn(Either.Right(EuroExchangeEntity.empty()))
-        given { exchangeRepository.currentRate(END_DATE) }.willReturn(Either.Right(EuroExchangeEntity(LOCALDATE_END, RATE)))
+        getCurrentValue = GetRecentRate(exchangeRepository)
+        given { exchangeRepository.getMostRecentRate() }.willReturn(Either.Right(EuroExchangeEntity(LOCALDATE_END, RATE)))
     }
 
     @Test
     fun `running use case should call mockito repository only once`() {
-        runBlocking { getCurrentValue.run(END_DATE) }
+        runBlocking { getCurrentValue.run(UseCase.None()) }
 
-        verify(exchangeRepository).currentRate(END_DATE)
+        verify(exchangeRepository).getMostRecentRate()
         verifyNoMoreInteractions(exchangeRepository)
     }
 
@@ -49,13 +51,12 @@ class GetCurrentValueTest : AbstractUnitTest() {
     fun `running async use case should return Failure or current Rate`() {
         var result: Either<Failure, EuroExchangeEntity>? = null
         val euroExchangeEntity = EuroExchangeEntity(LOCALDATE_END, RATE)
-        runBlocking { result = getCurrentValue(END_DATE).await() }
+        runBlocking { result = getCurrentValue(UseCase.None()).await() }
         result shouldNotBe null
 
         result?.either(
             { failure ->
-                (failure is Failure) shouldEqual true
-                //(failure is NetworkFailure || failure is ApiFailure) shouldEqual true
+                (failure is ServerError || failure is DBError) shouldEqual true
             },
             { success ->
                 euroExchangeEntity.date shouldEqual success.date

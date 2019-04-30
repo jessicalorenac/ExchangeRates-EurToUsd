@@ -1,4 +1,4 @@
-package com.jess.challenge.exchangerates.remote.model
+package com.jess.challenge.exchangerates.data.remote.model
 
 data class ExchangeRateModel(
     val dateStart: String,

@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':domain')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     def dataDependencies = rootProject.ext.dataDependencies

@@ -1,4 +1,4 @@
-package com.jess.challenge.exchangerates.remote.mapper
+package com.jess.challenge.exchangerates.data.mapper
 
 /**
  * Interface for model mappers. It provides helper methods that facilitate
@@ -8,5 +8,5 @@ package com.jess.challenge.exchangerates.remote.mapper
  * @param <E> the entity model output type
  */
 interface EntityMapper<in M, out E> {
-    fun mapFromRemote(model: M): E
+    fun mapModel(model: M): E
 }
