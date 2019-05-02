@@ -1,6 +1,7 @@
 package com.jess.challenge.exchangerates.ui.injection
 
 import com.jess.challenge.exchangerates.data.repository.ExchangeRatesRepositoryImpl
+import com.jess.challenge.exchangerates.domain.interactor.GetRangedFullEuroExchangeRates
 import com.jess.challenge.exchangerates.domain.interactor.GetRangedRateList
 import com.jess.challenge.exchangerates.domain.interactor.GetRecentRate
 import com.jess.challenge.exchangerates.domain.interactor.UseCase
@@ -16,9 +17,11 @@ val applicationModule = module(override = true) {
 
     single<ExchangeRatesRepository> { ExchangeRatesRepositoryImpl(androidContext()) }
 
-    //single<UseCase<EuroExchangeEntity, UseCase.None>> { GetRecentRate(get()) }
+    single(createdAtStart = true) { GetRecentRate(get()) }
 
-    //single<UseCase<List<EuroExchangeEntity>, DateRange>>{ GetRangedRateList(get()) }
+    single(createdAtStart = true) { GetRangedFullEuroExchangeRates(get()) }
+
+    viewModel { ExchangeRatesViewModel(get(), get()) }
 
 
 }

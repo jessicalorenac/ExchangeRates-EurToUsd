@@ -16,6 +16,18 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == "com.android.support") {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion "26.+"
+                }
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -29,9 +41,9 @@ repositories {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':domain')
     implementation project(path: ':data')
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     def mobileUiDependencies = rootProject.ext.mobileUiDependencies
     def mobileUiTestDependencies = rootProject.ext.mobileUiTestDependencies
@@ -48,6 +60,8 @@ dependencies {
     implementation mobileUiDependencies.philJayLib
     implementation mobileUiDependencies.archLifecycle
     implementation mobileUiDependencies.coroutines
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha04"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04"
 
     kapt "android.arch.lifecycle:compiler:1.1.1" // use kapt for Kotlin
     // alternately - if using Java8, use the following instead of compiler

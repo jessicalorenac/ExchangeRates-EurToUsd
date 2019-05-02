@@ -9,7 +9,7 @@
         tools:context=".view.ExchangeActivity">
 
     <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+            android:id="@+id/tabLayoutDateRanges"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:tabTextColor="@color/regularText"
@@ -52,7 +52,7 @@
 
     <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"
-            app:layout_constraintTop_toBottomOf="@id/tabLayout"
+            app:layout_constraintTop_toBottomOf="@id/tabLayoutDateRanges"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@id/currentValue"

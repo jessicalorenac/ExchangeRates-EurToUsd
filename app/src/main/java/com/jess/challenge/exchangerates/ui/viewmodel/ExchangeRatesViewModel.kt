@@ -1,40 +1,61 @@
 package com.jess.challenge.exchangerates.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.jess.challenge.exchangerates.domain.Either
-import com.jess.challenge.exchangerates.domain.interactor.GetRangedRateList
+import com.github.mikephil.charting.data.Entry
+import com.jess.challenge.exchangerates.domain.interactor.GetRangedFullEuroExchangeRates
 import com.jess.challenge.exchangerates.domain.interactor.GetRecentRate
 import com.jess.challenge.exchangerates.domain.interactor.UseCase
 import com.jess.challenge.exchangerates.domain.model.DateRange
 import com.jess.challenge.exchangerates.domain.model.EuroExchangeEntity
+import com.jess.challenge.exchangerates.domain.model.FullEuroExchangeRate
+import com.jess.challenge.exchangerates.ui.AppScope
+import com.jess.challenge.exchangerates.ui.model.CurrentValue
 import com.jess.challenge.exchangerates.ui.model.EuroChartModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class ExchangeRatesViewModel(
+class ExchangeRatesViewModel(var getRecentRate: GetRecentRate, var getFullEuroRates: GetRangedFullEuroExchangeRates) :
+    AbstractViewModel() {
 
-) : AbstractViewModel() {
-
-    var getRecentRate: GetRecentRate? = null
-    var getRangedRateList: GetRangedRateList? = null
 
     val chartDetail: MutableLiveData<EuroChartModel> = MutableLiveData()
+    val currentValue: MutableLiveData<CurrentValue> = MutableLiveData()
 
-    fun loadViewData(dateRange: DateRange) = CoroutineScope(Dispatchers.Main).launch {
-        val currentRateResult = getRecentRate?.let { it(UseCase.None()) }?.await()
-        val listRates = getRangedRateList?.let { it(dateRange) }?.await()
+    override fun onCleared() {
+        super.onCleared()
+        AppScope.cancel()
+    }
 
-        when {
-            currentRateResult is Either.Right && listRates is Either.Right -> handleChartData(currentRateResult.b, listRates.b)
-            currentRateResult is Either.Left -> handleFailure(currentRateResult.a)
-            listRates is Either.Left -> handleFailure(listRates.a)
+    fun loadCurrentValue() {
+        AppScope.launch { getRecentRate(UseCase.None()) { it.either(::handleFailure, ::handleCurrentValue) } }
+    }
+
+    fun loadLiveData(dateRange: DateRange) {
+        AppScope.launch {
+            getFullEuroRates(dateRange) { it.either(::handleFailure, ::handleChartData) }
         }
     }
 
-    private fun handleChartData(rate: EuroExchangeEntity, listRates: List<EuroExchangeEntity>) {
+    private fun handleChartData(exchangeRate: FullEuroExchangeRate) {
+
+        val listRates = exchangeRate.listRates.mapIndexed { index, euroExchangeEntity ->
+            Entry(index.toFloat(), euroExchangeEntity.value)
+        }
+
         this.chartDetail.value =
-            EuroChartModel(listRates, rate.value, rate.value, rate.date.toString(), 0.0F, 0.0F, 0.0F)
+            EuroChartModel(
+                listRates,
+                exchangeRate.listRates,
+                exchangeRate.listRates.first().value,
+                exchangeRate.dateEnd,
+                exchangeRate.maxRate,
+                exchangeRate.minRate,
+                exchangeRate.avgRate
+            )
+    }
+
+    private fun handleCurrentValue(entity: EuroExchangeEntity) {
+        this.currentValue.value = CurrentValue(entity.value)
     }
 
 }

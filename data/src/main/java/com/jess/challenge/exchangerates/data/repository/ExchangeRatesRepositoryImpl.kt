@@ -10,6 +10,7 @@ import com.jess.challenge.exchangerates.domain.Either.Left
 import com.jess.challenge.exchangerates.domain.Either.Right
 import com.jess.challenge.exchangerates.domain.exception.Failure
 import com.jess.challenge.exchangerates.domain.model.DateRange
+import com.jess.challenge.exchangerates.domain.model.EuroExchangeEntity
 import com.jess.challenge.exchangerates.domain.model.FullEuroExchangeRate
 import com.jess.challenge.exchangerates.domain.repository.ExchangeRatesRepository
 import com.jess.challenge.exchangerates.remote.ExchangeServiceFactory
@@ -83,9 +84,46 @@ class ExchangeRatesRepositoryImpl(private val context: Context) : ExchangeRatesR
         }
 
 
-    override fun getRangedFullRate(dateRange: DateRange): Either<Failure, FullEuroExchangeRate> {
-        TODO("not needed yet") //To change body of created functions use File | Settings | File Templates.
+    override fun getRangedFullRate(dateRange: DateRange): Either<Failure, FullEuroExchangeRate> =
+        try {
+            val startDate = getLocalDate(dateRange.startDate)
+            val endDate = getLocalDate(dateRange.endDate)
+            if (databaseDao?.getRateFromDate(startDate) != null && databaseDao?.getRateFromDate(endDate) != null) {
+                Right(
+                    getFullEuroExchangeRate(
+                        mapFromListDbToModel.mapModel(
+                            databaseDao?.getRangedRates(
+                                startDate,
+                                endDate
+                            ) ?: listOf()
+                        ), dateRange
+                    )
+                )
+            } else {
+                service.getEuroExchangeRates(dateRange.startDate, dateRange.endDate).execute().run {
+                    when {
+                        isSuccessful -> body()?.run {
+                            try {
+                                databaseDao?.insertList(mapFromRemoteToListDb.mapModel(this))
+                            } catch (e: Exception) {
+                                Log.e(TAG, "Error on insert rate to db: ${e.message}")
+                            }
+                            Right(getFullEuroExchangeRate(mapFromRemoteToListModel.mapModel(this), dateRange))
+                        } ?: Left(Failure.ServerError("No body"))
 
+                        else -> Left(Failure.ServerError(errorBody()?.toString() ?: "Unknown error"))
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Left(Failure.DBError("Error getting data from Db: ${e.message}"))
+        }
+
+    private fun getFullEuroExchangeRate(listRates: List<EuroExchangeEntity>, dateRange: DateRange): FullEuroExchangeRate {
+        val max = listRates.maxBy { it.value }?.value ?: 0.0F
+        val min = listRates.minBy { it.value }?.value ?: 0.0F
+        val avg = listRates.sumByDouble { it.value.toDouble() } / listRates.size
+        return FullEuroExchangeRate(listRates, dateRange.startDate, dateRange.endDate, min, max, avg.toFloat())
     }
 
 }
