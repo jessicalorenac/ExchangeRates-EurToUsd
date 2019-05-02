@@ -12,6 +12,7 @@
 - Mockito
 - Kluent
 - JUnit4
+- MPAndroidChart
 
 ## Project Description
 This app is retrieving data from a free API: https://api.exchangeratesapi.io and this one doesn't retrieve reliable data, which means that data could not be updated or the requested date may not return anything.
@@ -22,6 +23,8 @@ The project is using clean architecture with modules (app, domain and data).
 
 ## Previsualization
 
-|Chart with numbers|Chart without numbers|
-|---|---|
-|![3 months](arts/3m.png)|![6 monts](arts/6m.png)|
+|Chart with numbers|Chart without numbers|Landscape|
+|---|---|---|
+|![3 months](arts/3m.png)|![6 months](arts/6m.png)|![3 months_landscape](arts/3m-land.png)|
+
+
