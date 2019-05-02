@@ -23,8 +23,8 @@ The project is using clean architecture with modules (app, domain and data).
 
 ## Previsualization
 
-|Chart with numbers|Chart without numbers|Landscape|
-|---|---|---|
-|![3 months](arts/3m.png)|![6 months](arts/6m.png)|![3 months_landscape](arts/3m-land.png)|
+|Portrait|Landscape|
+|---|---|
+|![3 months](arts/3m.png)|![3 months_landscape](arts/3m-land.png)|
 
 
