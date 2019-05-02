@@ -6,5 +6,5 @@ import com.jess.challenge.exchangerates.data.remote.model.Rate
 
 class MapFromRemoteToDB: EntityMapper<Rate, ExchangeRateDbEntity> {
     override fun mapModel(model: Rate) =
-        ExchangeRateDbEntity(null, getLocalDate(model.date), model.value)
+        ExchangeRateDbEntity(getLocalDate(model.date), model.value)
 }

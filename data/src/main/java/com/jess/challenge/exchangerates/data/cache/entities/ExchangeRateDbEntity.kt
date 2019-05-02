@@ -10,6 +10,7 @@ import java.time.LocalDate
 //include a foreignkey to a Symbol table, which is not going to be added for this
 //challenge
 @Entity(tableName = "exchangeRate")
-data class ExchangeRateDbEntity(@PrimaryKey (autoGenerate = true) var id: Long?,
-                                @ColumnInfo(name = "date") var rateDate: LocalDate,
-                                @ColumnInfo(name = "val_rate") var rateVal: Float)
+data class ExchangeRateDbEntity(
+    @PrimaryKey var rateDate: LocalDate,
+    @ColumnInfo(name = "val_rate") var rateVal: Float
+)

@@ -9,7 +9,7 @@ import com.jess.challenge.exchangerates.data.cache.dao.ExchangeRateDao
 import com.jess.challenge.exchangerates.data.cache.entities.ExchangeRateDbEntity
 
 
-@Database(entities = arrayOf(ExchangeRateDbEntity::class), version = 1)
+@Database(entities = arrayOf(ExchangeRateDbEntity::class), version = 2)
 @TypeConverters(Converters::class)
 abstract class EuroExchangeRateDatabase : RoomDatabase() {
 
@@ -25,7 +25,8 @@ abstract class EuroExchangeRateDatabase : RoomDatabase() {
                         context.applicationContext,
                         EuroExchangeRateDatabase::class.java,
                         "euro_exchange.db"
-                    ).build()
+                    ).fallbackToDestructiveMigration()
+                        .build()
                 }
             }
             return INSTANCE

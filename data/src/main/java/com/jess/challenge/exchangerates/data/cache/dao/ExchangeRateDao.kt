@@ -11,13 +11,13 @@ import java.time.LocalDate
 interface ExchangeRateDao {
 
 
-    @Query("SELECT * FROM exchangeRate WHERE date LIKE :date ")
+    @Query("SELECT * FROM exchangeRate WHERE rateDate LIKE :date ")
     fun getRateFromDate(date: LocalDate): ExchangeRateDbEntity
 
-    @Query("SELECT * FROM exchangeRate ORDER BY date DESC LIMIT 1")
+    @Query("SELECT * FROM exchangeRate ORDER BY rateDate DESC LIMIT 1")
     fun getMostRecentRate(): ExchangeRateDbEntity
 
-    @Query("SELECT * FROM exchangeRate WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC")
+    @Query("SELECT * FROM exchangeRate WHERE rateDate BETWEEN :startDate AND :endDate ORDER BY rateDate ASC")
     fun getRangedRates(startDate: LocalDate, endDate: LocalDate): List<ExchangeRateDbEntity>
 
     @Insert(onConflict = REPLACE)
