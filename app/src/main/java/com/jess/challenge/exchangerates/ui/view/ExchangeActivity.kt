@@ -32,8 +32,8 @@ class ExchangeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        exchangeRatesViewModel.chartDetail.observe(this, Observer { updateScreen(it) })
         exchangeRatesViewModel.currentValue.observe(this, Observer { updateCurrentValue(it) })
+        exchangeRatesViewModel.chartDetail.observe(this, Observer { updateScreen(it) })
         exchangeRatesViewModel.failure.observe(this, Observer { updateError(it) })
 
         tabLayoutDateRanges.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -69,13 +69,11 @@ class ExchangeActivity : AppCompatActivity() {
                 exchangeRatesViewModel.loadValueSelected(e)
             }
         })
-    }
 
-    override fun onResume() {
-        super.onResume()
-        exchangeRatesViewModel.loadCurrentValue()
-        exchangeRatesViewModel.loadLiveData(dateRange)
-
+        if (savedInstanceState == null) {
+            exchangeRatesViewModel.loadCurrentValue()
+            exchangeRatesViewModel.loadLiveData(dateRange)
+        }
     }
 
     private fun updateScreen(data: EuroChartModel) {
@@ -100,8 +98,10 @@ class ExchangeActivity : AppCompatActivity() {
 
     private fun updateCurrentValue(data: CurrentValue) {
         currentValue.text = resources.getString(R.string.current_value_text, data.currentVal.toString())
-        selectedRate.text = data.selectedVal.toString()
-        dateSelected.text = data.selectedDate
+        if (data.selectedVal != null) {
+            selectedRate.text = data.selectedVal.toString()
+            dateSelected.text = data.selectedDate
+        }
     }
 
     private fun updateError(failure: Failure) {
