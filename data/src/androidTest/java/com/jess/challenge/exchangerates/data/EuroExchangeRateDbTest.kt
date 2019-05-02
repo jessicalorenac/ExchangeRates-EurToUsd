@@ -65,7 +65,6 @@ class EuroExchangeRateDbTest {
     private val listExchangeRate =
         LIST_DATES.mapIndexed { index, date ->
             ExchangeRateDbEntity(
-                null,
                 getLocalDate(date),
                 LIST_RATES[index]
             )
@@ -90,8 +89,8 @@ class EuroExchangeRateDbTest {
     @Test
     @Throws(Exception::class)
     fun writeExchangeRateAndReadInList() {
-        val exchangeRateEnd = ExchangeRateDbEntity(null, LOCALDATE_END, RATE)
-        val exchangeRateStart = ExchangeRateDbEntity(null, LOCALDATE_START, RATE2)
+        val exchangeRateEnd = ExchangeRateDbEntity( LOCALDATE_END, RATE)
+        val exchangeRateStart = ExchangeRateDbEntity( LOCALDATE_START, RATE2)
         exchangeRateDao.insertRate(exchangeRateStart)
         exchangeRateDao.insertRate(exchangeRateEnd)
         val latestRate = exchangeRateDao.getMostRecentRate()
