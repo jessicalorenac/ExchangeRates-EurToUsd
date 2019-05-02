@@ -17,7 +17,7 @@ interface ExchangeRateDao {
     @Query("SELECT * FROM exchangeRate ORDER BY date DESC LIMIT 1")
     fun getMostRecentRate(): ExchangeRateDbEntity
 
-    @Query("SELECT * FROM exchangeRate WHERE date BETWEEN :startDate AND :endDate")
+    @Query("SELECT * FROM exchangeRate WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC")
     fun getRangedRates(startDate: LocalDate, endDate: LocalDate): List<ExchangeRateDbEntity>
 
     @Insert(onConflict = REPLACE)

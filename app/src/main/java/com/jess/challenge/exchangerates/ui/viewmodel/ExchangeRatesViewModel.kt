@@ -36,6 +36,14 @@ class ExchangeRatesViewModel(var getRecentRate: GetRecentRate, var getFullEuroRa
         }
     }
 
+    fun loadValueSelected(entry: Entry?){
+        val fullModel = chartDetail.value
+        val chartModel = currentValue.value
+        chartModel?.selectedVal = entry?.y ?: fullModel?.exchangeRateList?.first()?.value ?: 0.0F
+        chartModel?.selectedDate = fullModel?.exchangeRateList?.get(entry?.x?.toInt() ?: 0)?.date.toString()
+        currentValue.value = chartModel
+    }
+
     private fun handleChartData(exchangeRate: FullEuroExchangeRate) {
 
         val listRates = exchangeRate.listRates.mapIndexed { index, euroExchangeEntity ->
@@ -55,7 +63,7 @@ class ExchangeRatesViewModel(var getRecentRate: GetRecentRate, var getFullEuroRa
     }
 
     private fun handleCurrentValue(entity: EuroExchangeEntity) {
-        this.currentValue.value = CurrentValue(entity.value)
+        this.currentValue.value = CurrentValue(entity.value, null, null)
     }
 
 }

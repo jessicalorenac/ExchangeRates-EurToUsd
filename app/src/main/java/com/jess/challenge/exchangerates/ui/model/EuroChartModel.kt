@@ -6,8 +6,8 @@ import com.jess.challenge.exchangerates.domain.model.EuroExchangeEntity
 data class EuroChartModel(
     val entries: List<Entry>,
     val exchangeRateList: List<EuroExchangeEntity>,
-    val selectedValue: Float,
-    val selectedDate: String,
+    var selectedValue: Float,
+    var selectedDate: String,
     val maxRate: Float,
     val minRate: Float,
     val avgRate: Float

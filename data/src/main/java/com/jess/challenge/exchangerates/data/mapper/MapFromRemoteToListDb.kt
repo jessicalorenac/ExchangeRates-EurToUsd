@@ -8,5 +8,5 @@ class MapFromRemoteToListDb : EntityMapper<ExchangeRateModel, List<ExchangeRateD
     override fun mapModel(model: ExchangeRateModel) =
         model.listRate.map {
             ExchangeRateDbEntity(null, getLocalDate(it.date), it.value)
-        }
+        }.sortedBy { it.rateDate }
 }

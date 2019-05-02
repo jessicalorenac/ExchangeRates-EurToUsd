@@ -5,7 +5,6 @@ package com.jess.challenge.exchangerates.domain.exception
  * Every feature specific failure should extend [FeatureFailure] class.
  */
 sealed class Failure {
-    object NetworkConnection : Failure()
     data class ServerError(val message: String) : Failure()
     data class DBError(val message: String) : Failure()
 

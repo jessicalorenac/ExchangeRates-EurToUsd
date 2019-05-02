@@ -1,9 +1,9 @@
 package com.jess.challenge.exchangerates.data
 
 import com.jess.challenge.exchangerates.data.remote.model.EuroDateRangeParams
+import com.jess.challenge.exchangerates.data.remote.model.ExchangeRateModel
+import com.jess.challenge.exchangerates.data.remote.model.Rate
 import com.jess.challenge.exchangerates.remote.ExchangeServiceFactory
-import com.jess.challenge.exchangerates.remote.model.ExchangeRateModel
-import com.jess.challenge.exchangerates.remote.model.Rate
 import org.junit.Test
 
 class RemoteUnitTest {

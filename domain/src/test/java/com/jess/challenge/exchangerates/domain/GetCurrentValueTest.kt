@@ -1,8 +1,6 @@
 package com.jess.challenge.exchangerates.domain
 
 import com.jess.challenge.exchangerates.domain.exception.Failure
-import com.jess.challenge.exchangerates.domain.exception.Failure.ServerError
-import com.jess.challenge.exchangerates.domain.exception.Failure.DBError
 import com.jess.challenge.exchangerates.domain.interactor.GetRecentRate
 import com.jess.challenge.exchangerates.domain.interactor.UseCase
 import com.jess.challenge.exchangerates.domain.model.EuroExchangeEntity
@@ -49,19 +47,19 @@ class GetCurrentValueTest : AbstractUnitTest() {
 
     @Test
     fun `running async use case should return Failure or current Rate`() {
-//        var result: Either<Failure, EuroExchangeEntity>? = null
-//        val euroExchangeEntity = EuroExchangeEntity(LOCALDATE_END, RATE)
-//        runBlocking { result = getCurrentValue(UseCase.None()).await() }
-//        result shouldNotBe null
-//
-//        result?.either(
-//            { failure ->
-//                (failure is ServerError || failure is DBError) shouldEqual true
-//            },
-//            { success ->
-//                euroExchangeEntity.date shouldEqual success.date
-//                euroExchangeEntity.value shouldEqual success.value
-//            })
+        var result: Either<Failure, EuroExchangeEntity>? = null
+        val euroExchangeEntity = EuroExchangeEntity(LOCALDATE_END, RATE)
+        runBlocking { result = getCurrentValue.run(UseCase.None()) }
+        result shouldNotBe null
+
+        result?.either(
+            { failure ->
+                (failure is Failure.ServerError || failure is Failure.DBError) shouldEqual true
+            },
+            { success ->
+                euroExchangeEntity.date shouldEqual success.date
+                euroExchangeEntity.value shouldEqual success.value
+            })
 
     }
 }

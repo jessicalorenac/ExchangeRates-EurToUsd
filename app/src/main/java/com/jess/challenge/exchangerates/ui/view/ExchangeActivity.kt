@@ -1,11 +1,18 @@
 package com.jess.challenge.exchangerates.ui.view
 
 import android.os.Bundle
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.jess.challenge.exchangerates.domain.exception.Failure
 import com.jess.challenge.exchangerates.domain.model.DateRange
 import com.jess.challenge.exchangerates.ui.R
 import com.jess.challenge.exchangerates.ui.model.CurrentValue
@@ -20,7 +27,6 @@ class ExchangeActivity : AppCompatActivity() {
     val exchangeRatesViewModel: ExchangeRatesViewModel by viewModel()
 
     lateinit var dateRange: DateRange
-    val messageCurrentValue = "current value: € "
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +34,7 @@ class ExchangeActivity : AppCompatActivity() {
 
         exchangeRatesViewModel.chartDetail.observe(this, Observer { updateScreen(it) })
         exchangeRatesViewModel.currentValue.observe(this, Observer { updateCurrentValue(it) })
+        exchangeRatesViewModel.failure.observe(this, Observer { updateError(it) })
 
         tabLayoutDateRanges.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(p0: TabLayout.Tab?) {
@@ -52,18 +59,33 @@ class ExchangeActivity : AppCompatActivity() {
         })
 
         tabLayoutDateRanges.getTabAt(2)?.select()
+
+
+
+        lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+            override fun onNothingSelected() {}
+
+            override fun onValueSelected(e: Entry?, h: Highlight?) {
+                exchangeRatesViewModel.loadValueSelected(e)
+            }
+        })
     }
 
     override fun onResume() {
         super.onResume()
         exchangeRatesViewModel.loadCurrentValue()
         exchangeRatesViewModel.loadLiveData(dateRange)
+
     }
 
     private fun updateScreen(data: EuroChartModel) {
-        val dataSet = LineDataSet(data.entries, "Jessies")
+        val dataSet = LineDataSet(data.entries, "USD")
         val lineData = LineData(dataSet)
+        lineData.setValueTextColor(color(R.color.regularText))
+        lineData.setValueTextSize(resources.getDimension(R.dimen.rate_chart_text_size))
         lineChart.data = lineData
+        lineChart.animateX(1_000)
+        lineChart.animateY(100, Easing.EaseOutElastic)
         lineChart.invalidate()
 
         selectedRate.text = data.selectedValue.toString()
@@ -74,8 +96,23 @@ class ExchangeActivity : AppCompatActivity() {
 
     }
 
+    private fun color(@ColorRes color: Int) = resources.getColor(color, null)
+
     private fun updateCurrentValue(data: CurrentValue) {
-        currentValue.text = "$messageCurrentValue ${data.currentVal}"
+        currentValue.text = resources.getString(R.string.current_value_text, data.currentVal.toString())
+        selectedRate.text = data.selectedVal.toString()
+        dateSelected.text = data.selectedDate
+    }
+
+    private fun updateError(failure: Failure) {
+        Snackbar.make(
+            constraintLayout,
+            when (failure) {
+                is Failure.DBError -> resources.getString(R.string.Error_no_data_found) + failure.message
+                is Failure.ServerError -> resources.getString(R.string.Error_no_internet) + failure.message
+                else -> resources.getString(R.string.Error)
+            }, Snackbar.LENGTH_LONG
+        ).show()
     }
 
     // Default format yyyy-MM-dd is the one required

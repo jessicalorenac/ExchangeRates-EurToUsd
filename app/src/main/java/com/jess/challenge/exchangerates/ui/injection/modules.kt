@@ -25,8 +25,3 @@ val applicationModule = module(override = true) {
 
 
 }
-//
-//val domainModule = module("data", override = true) {
-//
-//
-//}
