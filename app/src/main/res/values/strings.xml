@@ -3,6 +3,7 @@
     <string name="str_max">Max:</string>
     <string name="str_min">Min:</string>
     <string name="str_avg">Avg:</string>
+    <string name="dollar">$</string>
     <string name="euro">€</string>
 
 
@@ -12,8 +13,7 @@
     <string name="tab_fourth">6M</string>
     <string name="tab_fifth">1Y</string>
 
-
-    <string name="current_value_text">current value: € %1$s</string>
+    <string name="current_value_text">Latest Exchange: $ %1$s</string>
 
     <string name="Error_no_internet">No interrnet connection found</string>
     <string name="Error_no_data_found">No data found on server</string>

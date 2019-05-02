@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/RatesText.Small"
-            android:text="@string/euro"
+            android:text="@string/dollar"
             />
 
     <TextView
