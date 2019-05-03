@@ -1,4 +1,4 @@
-# Schibsted---Technical-Challenge
+# Exchange Rates: Eur to Usd
 
 ## Languages, libraries and tools used
 - Kotlin
