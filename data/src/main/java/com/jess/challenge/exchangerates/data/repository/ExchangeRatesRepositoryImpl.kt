@@ -116,7 +116,7 @@ class ExchangeRatesRepositoryImpl(private val context: Context) : ExchangeRatesR
                 }
             }
         } catch (e: Exception) {
-            Left(Failure.DBError("Error getting data from Db: ${e.message}"))
+            Left(Failure.ServerError("No data found: ${e.message}"))
         }
 
     private fun getFullEuroExchangeRate(listRates: List<EuroExchangeEntity>, dateRange: DateRange): FullEuroExchangeRate {

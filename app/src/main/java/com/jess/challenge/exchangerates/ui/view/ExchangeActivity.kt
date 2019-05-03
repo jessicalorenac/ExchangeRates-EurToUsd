@@ -1,6 +1,7 @@
 package com.jess.challenge.exchangerates.ui.view
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -27,6 +28,14 @@ class ExchangeActivity : AppCompatActivity() {
     val exchangeRatesViewModel: ExchangeRatesViewModel by viewModel()
 
     lateinit var dateRange: DateRange
+    var selectedTab = 2
+    var TAB_SELECTED = "selectedTab"
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(TAB_SELECTED, selectedTab)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +59,7 @@ class ExchangeActivity : AppCompatActivity() {
                     tabLayoutDateRanges.selectedTabPosition == 4 -> dateRange =
                         DateRange(getCurrentDate().minusYears(1).toString(), getCurrentDate().toString())
                 }
+                selectedTab = tabLayoutDateRanges.selectedTabPosition
                 exchangeRatesViewModel.loadLiveData(dateRange)
             }
 
@@ -58,7 +68,11 @@ class ExchangeActivity : AppCompatActivity() {
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
         })
 
-        tabLayoutDateRanges.getTabAt(2)?.select()
+        if(savedInstanceState != null){
+            selectedTab = savedInstanceState.getInt(TAB_SELECTED)
+        }
+
+        tabLayoutDateRanges.getTabAt(selectedTab)?.select()
 
 
 
@@ -71,6 +85,7 @@ class ExchangeActivity : AppCompatActivity() {
         })
 
         if (savedInstanceState == null) {
+
             exchangeRatesViewModel.loadCurrentValue()
             exchangeRatesViewModel.loadLiveData(dateRange)
         }
