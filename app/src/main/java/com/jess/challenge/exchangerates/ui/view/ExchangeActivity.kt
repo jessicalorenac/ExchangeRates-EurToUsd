@@ -2,6 +2,7 @@ package com.jess.challenge.exchangerates.ui.view
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.View
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -60,6 +61,7 @@ class ExchangeActivity : AppCompatActivity() {
                         DateRange(getCurrentDate().minusYears(1).toString(), getCurrentDate().toString())
                 }
                 selectedTab = tabLayoutDateRanges.selectedTabPosition
+                showProgressBar(true)
                 exchangeRatesViewModel.loadLiveData(dateRange)
             }
 
@@ -85,13 +87,14 @@ class ExchangeActivity : AppCompatActivity() {
         })
 
         if (savedInstanceState == null) {
-
+            showProgressBar(true)
             exchangeRatesViewModel.loadCurrentValue()
             exchangeRatesViewModel.loadLiveData(dateRange)
         }
     }
 
     private fun updateScreen(data: EuroChartModel) {
+        showProgressBar(false)
         val dataSet = LineDataSet(data.entries, "USD")
         val lineData = LineData(dataSet)
         lineData.setValueTextColor(color(R.color.regularText))
@@ -120,6 +123,7 @@ class ExchangeActivity : AppCompatActivity() {
     }
 
     private fun updateError(failure: Failure) {
+        showProgressBar(false)
         Snackbar.make(
             constraintLayout,
             when (failure) {
@@ -133,4 +137,7 @@ class ExchangeActivity : AppCompatActivity() {
     // Default format yyyy-MM-dd is the one required
     private fun getCurrentDate() = LocalDate.now()
 
+    private fun showProgressBar(show: Boolean) {
+        progressBar.visibility = if (show) View.VISIBLE else View.GONE
+    }
 }

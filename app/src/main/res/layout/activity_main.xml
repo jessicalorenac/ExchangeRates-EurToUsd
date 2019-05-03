@@ -182,4 +182,16 @@
             android:text="1,29"
             tools:text="1,24"/>
 
+    <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="@dimen/progress_size"
+            android:layout_height="@dimen/progress_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="@dimen/current_rate_margin_top"
+            android:layout_marginRight="@dimen/current_rate_margin_top"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/progressBar"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
