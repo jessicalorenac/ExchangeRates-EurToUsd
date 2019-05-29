@@ -1,6 +1,6 @@
 # Exchange Rates: Eur to Usd
 
-## Languajes, libraries and tools used
+## Languages, libraries and tools used
 - Kotlin
 - Room
 - Coroutines
